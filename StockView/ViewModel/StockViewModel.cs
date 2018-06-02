@@ -65,6 +65,7 @@ namespace StockView.ViewModel
                     Stock.CurrentPricePerShare = Stock.CurrentPricePerShare;
                     MessageBox.Show("Fehler beim Interpretieren des aktuellen Kurses: Muss Währung sein!", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+                RaisePropertyChanged(nameof(CurrentPricePerShare));
             }
         }
 
@@ -131,9 +132,12 @@ namespace StockView.ViewModel
                 var value = Stock.CurrentPricePerShare * Stock.Shares - Stock.BuyPricePerShare * Stock.Shares;
                 value /= Stock.BuyPricePerShare * Stock.Shares;
                 value *= 100;
+                value = decimal.Round(value, 2, MidpointRounding.AwayFromZero);
                 return value.ToString("G", CultureInfo.CreateSpecificCulture("de-DE")) + " %";
             }
         }
+
+        public event EventHandler EvtUpdate;
 
         public StockViewModel(Stock stock)
         {
@@ -143,6 +147,7 @@ namespace StockView.ViewModel
 
         private void OnStockUpdate(object sender, EventArgs e)
         {
+            RaisePropertyChanged(nameof(Shares));
             RaisePropertyChanged(nameof(BuyPricePerShare));
             RaisePropertyChanged(nameof(CurrentPricePerShare));
             RaisePropertyChanged(nameof(BuyPriceTotal));
@@ -151,6 +156,8 @@ namespace StockView.ViewModel
             RaisePropertyChanged(nameof(RevenueBrush));
             RaisePropertyChanged(nameof(RealizedRevenueBrush));
             RaisePropertyChanged(nameof(PossibleRevenuePercentage));
+
+            EvtUpdate?.Invoke(this, EventArgs.Empty);
         }
 
         private string ToCurrency(decimal value)

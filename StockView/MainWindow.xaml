@@ -17,7 +17,18 @@
             <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
         <GroupBox Grid.Row="0" Header="Depot">
-            <DataGrid ItemsSource="{Binding Stocks}" FrozenColumnCount="1" AutoGenerateColumns="False">
+            <DataGrid ItemsSource="{Binding StockVms}" FrozenColumnCount="1" AutoGenerateColumns="False">
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="ContentTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding}"></TextBlock>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Titel" Binding="{Binding Title}" Width="*"></DataGridTextColumn>
                     <DataGridTextColumn Header="WKN" Binding="{Binding WKN}" Width="*"></DataGridTextColumn>

@@ -72,6 +72,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\Transaction.cs" />
     <Compile Include="ViewModel\StockAddViewModel.cs" />
     <Compile Include="ViewModel\StockBuyViewModel.cs" />
     <Compile Include="ViewModel\StockSellViewModel.cs" />

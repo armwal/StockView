@@ -16,6 +16,9 @@ namespace StockView.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        private const int writeVersion = 1;
+        private const string name = "StockView";
+
         private string fileName;
         private List<Stock> stocks;
 
@@ -42,8 +45,6 @@ namespace StockView.ViewModel
         public ICommand CmdBuy { get; set; }
         public ICommand CmdSell { get; set; }
 
-
-
         public MainWindowViewModel()
         {
             stocks = new List<Stock>();
@@ -52,6 +53,8 @@ namespace StockView.ViewModel
             CmdBuy = new RelayCommand(CmdBuyExecute);
             CmdSell = new RelayCommand(CmdSellExecute);
             CmdAddNew = new RelayCommand(CmdAddNewExecute);
+
+            fileName = Properties.Settings.Default.SaveFilePath;
         }
 
         private void CmdAddNewExecute()
@@ -62,8 +65,23 @@ namespace StockView.ViewModel
             if (addDlg.NewStock != null)
             {
                 stocks.Add(addDlg.NewStock);
-                StockVms.Add(new StockViewModel(addDlg.NewStock));
+                var vm = new StockViewModel(addDlg.NewStock);
+                vm.EvtUpdate += OnUpdate;
+                StockVms.Add(vm);
+
+                UpdatePrices();
             }
+        }
+
+        private void OnUpdate(object sender, EventArgs e)
+        {
+            UpdatePrices();
+        }
+
+        private void UpdatePrices()
+        {
+            RaisePropertyChanged(nameof(TotalBuyPrice));
+            RaisePropertyChanged(nameof(TotalSellPrice));
         }
 
         private void CmdSellExecute()
