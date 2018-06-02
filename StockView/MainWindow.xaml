@@ -41,6 +41,7 @@
             </StackPanel>
         </GroupBox>
         <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Button Width="150" Height="30" Command="{Binding CmdAddNew}">Neue Aktie</Button>
             <Button Width="150" Height="30" Command="{Binding CmdBuy}">Aktie Kaufen</Button>
             <Button Width="150" Height="30" Command="{Binding CmdSell}">Aktie Verkaufen</Button>
         </StackPanel>

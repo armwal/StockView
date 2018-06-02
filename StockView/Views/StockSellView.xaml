@@ -1,0 +1,46 @@
+﻿<Window x:Class="StockView.Views.StockSellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StockView.ViewModel"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+            Title="Aktien Verkaufen" Height="250" Width="300">
+    <Window.DataContext>
+        <local:StockSellViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Aktie</TextBlock>
+            <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding AvailableStocks}" SelectedItem="{Binding SelectedStock}" Margin="10" Height="30">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock VerticalAlignment="Center" Text="{Binding Title}"></TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Anzahl</TextBlock>
+            <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1" Height="30" Margin="10" Value="{Binding Shares}" Minimum="0" Increment="1"></xctk:IntegerUpDown>
+            <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Kurs</TextBlock>
+            <xctk:DecimalUpDown Grid.Row="2" Grid.Column="1" Height="30" Margin="10" Value="{Binding PricePerShare}" Minimum="0" Increment="0.01"></xctk:DecimalUpDown>
+        </Grid>
+        <UniformGrid Grid.Row="1" Columns="2">
+            <Button Width="100" Margin="10" Click="OnSellClick" IsEnabled="{Binding CanBuy}">Kaufen</Button>
+            <Button Width="100" Margin="10" Click="OnCancelClick">Abbrechen</Button>
+        </UniformGrid>
+    </Grid>
+</Window>

@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
 using StockView.Models;
+using StockView.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,14 +17,15 @@ namespace StockView.ViewModel
     public class MainWindowViewModel : ViewModelBase
     {
         private string fileName;
+        private List<Stock> stocks;
 
-        public ObservableCollection<StockViewModel> Stocks { get; set; }
+        public ObservableCollection<StockViewModel> StockVms { get; set; }
 
         public string TotalBuyPrice
         {
             get
             {
-                return ToCurrency(Stocks.Sum(x => x.Stock.BuyPricePerShare * x.Stock.Shares));
+                return ToCurrency(stocks.Sum(x => x.BuyPricePerShare * x.Shares));
             }
         }
 
@@ -31,11 +33,12 @@ namespace StockView.ViewModel
         {
             get
             {
-                return ToCurrency(Stocks.Sum(x => x.Stock.CurrentPricePerShare * x.Stock.Shares));
+                return ToCurrency(stocks.Sum(x => x.CurrentPricePerShare * x.Shares));
             }
         }
 
         public ICommand CmdOpen { get; set; }
+        public ICommand CmdAddNew { get; set; }
         public ICommand CmdBuy { get; set; }
         public ICommand CmdSell { get; set; }
 
@@ -43,25 +46,41 @@ namespace StockView.ViewModel
 
         public MainWindowViewModel()
         {
-            Stocks = new ObservableCollection<StockViewModel>();
+            stocks = new List<Stock>();
+            StockVms = new ObservableCollection<StockViewModel>();
             CmdOpen = new RelayCommand(CmdOpenExecute);
             CmdBuy = new RelayCommand(CmdBuyExecute);
             CmdSell = new RelayCommand(CmdSellExecute);
+            CmdAddNew = new RelayCommand(CmdAddNewExecute);
+        }
+
+        private void CmdAddNewExecute()
+        {
+            StockAddView addDlg = new StockAddView(stocks);
+            addDlg.ShowDialog();
+
+            if (addDlg.NewStock != null)
+            {
+                stocks.Add(addDlg.NewStock);
+                StockVms.Add(new StockViewModel(addDlg.NewStock));
+            }
         }
 
         private void CmdSellExecute()
         {
-            throw new NotImplementedException();
+            StockSellView sellDlg = new StockSellView(stocks);
+            sellDlg.ShowDialog();
         }
 
         private void CmdBuyExecute()
         {
-            throw new NotImplementedException();
+            StockBuyView buyDlg = new StockBuyView(stocks);
+            buyDlg.ShowDialog();
         }
 
         private void CmdOpenExecute()
         {
-            if (Stocks.Count > 0)
+            if (StockVms.Count > 0)
             {
                 SaveToFile();
             }
