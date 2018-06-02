@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StockView.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,24 @@ namespace StockView
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void OnCloseClick(object sender, EventArgs e)
+        {
+            if (DataContext is MainWindowViewModel vm)
+            {
+                vm.SaveToFile();
+            }
+
+            Close();
+        }
+
+        private void OnAutoGeneratingColumns(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if (e.Column.Header.ToString() != "Aktueller Kurs")
+            {
+                e.Column.IsReadOnly = true;
+            }
         }
     }
 }
