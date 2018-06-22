@@ -7,10 +7,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Xml.Linq;
 
 namespace StockView.ViewModel
 {
@@ -114,14 +116,59 @@ namespace StockView.ViewModel
 
         public void LoadFromFile(string loadFileName)
         {
-            fileName = loadFileName;
+            if (File.Exists(fileName))
+            {
+                stocks.Clear();
+                StockVms.Clear();
+                fileName = loadFileName;
+                XDocument doc = XDocument.Load(fileName);
+                var root = doc.Element(name);
+                var stockCollection = root.Element("Stocks");
+                foreach (var el in stockCollection.Elements())
+                {
+                    Stock stock = Stock.FromXml(el);
+                    stocks.Add(stock);
+
+                    var vm = new StockViewModel(stock);
+                    vm.EvtUpdate += OnUpdate;
+                    StockVms.Add(vm);
+                }
+
+                UpdatePrices();
+            }
         }
 
         public void SaveToFile()
         {
             if (!string.IsNullOrEmpty(fileName))
             {
+                XDocument doc = new XDocument();
+                XElement root = new XElement(name);
+                root.Add(new XAttribute("Version", writeVersion));
+                XElement stockCollection = new XElement("Stocks");
+                stockCollection.Add(new XAttribute("Count", stocks.Count));
+                foreach (var stock in stocks)
+                {
+                    stockCollection.Add(stock.Write());
+                }
+                root.Add(stockCollection);
+                doc.Add(root);
 
+                doc.Save(fileName);
+
+                Properties.Settings.Default.SaveFilePath = fileName;
+                Properties.Settings.Default.Save();
+            }
+            else
+            {
+                SaveFileDialog dlg = new SaveFileDialog();
+                dlg.Title = "Speichere Depotübersicht";
+                dlg.Filter = "Depots (*.xml)|*.xml";
+                if (dlg.ShowDialog() == true)
+                {
+                    fileName = dlg.FileName;
+                    SaveToFile();
+                }
             }
         }
 

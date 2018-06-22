@@ -27,9 +27,9 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Aktie</TextBlock>
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Title}" Height="30" Margin="10"></TextBox>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Title}" Height="30" Margin="10" VerticalContentAlignment="Center" x:Name="TitleBox"></TextBox>
             <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">WKN</TextBlock>
-            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding WKN}" Height="30" Margin="10"></TextBox>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding WKN}" Height="30" Margin="10" VerticalContentAlignment="Center"></TextBox>
             <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Anzahl</TextBlock>
             <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" Height="30" Margin="10" Value="{Binding Shares}" Minimum="0" Increment="1"></xctk:IntegerUpDown>
             <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Kurs</TextBlock>

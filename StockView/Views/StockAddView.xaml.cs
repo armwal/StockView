@@ -28,6 +28,7 @@ namespace StockView.Views
             InitializeComponent();
 
             ((StockAddViewModel)DataContext).Initialize(stocks);
+            TitleBox.Focus();
         }
 
         private void OnAddClick(object sender, EventArgs e)
