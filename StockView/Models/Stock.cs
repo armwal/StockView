@@ -76,6 +76,15 @@ namespace StockView.Models
             EvtUpdate?.Invoke(this, new UpdateEventArgs(this));
         }
 
+        public void PerformSplit(int newShares, decimal newPrice)
+        {
+            BuyPricePerShare *= (decimal)Shares / newShares;
+            Shares = newShares;
+            CurrentPricePerShare = newPrice;
+
+            EvtUpdate?.Invoke(this, new UpdateEventArgs(this));
+        }
+
         public XElement Write()
         {
             XElement element = new XElement(name);

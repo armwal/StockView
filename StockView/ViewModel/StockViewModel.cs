@@ -164,5 +164,10 @@ namespace StockView.ViewModel
         {
             return value.ToString("C", CultureInfo.CreateSpecificCulture("de-DE"));
         }
+
+        public override string ToString()
+        {
+            return Title;
+        }
     }
 }

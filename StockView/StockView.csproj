@@ -94,6 +94,7 @@
     <Compile Include="ViewModel\StockAddViewModel.cs" />
     <Compile Include="ViewModel\StockBuyViewModel.cs" />
     <Compile Include="ViewModel\StockSellViewModel.cs" />
+    <Compile Include="ViewModel\StockSplitViewModel.cs" />
     <Compile Include="ViewModel\StockViewModel.cs" />
     <Compile Include="Views\StockAddView.xaml.cs">
       <DependentUpon>StockAddView.xaml</DependentUpon>
@@ -103,6 +104,9 @@
     </Compile>
     <Compile Include="Views\StockSellView.xaml.cs">
       <DependentUpon>StockSellView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StockSplitView.xaml.cs">
+      <DependentUpon>StockSplitView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -125,6 +129,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\StockSellView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StockSplitView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

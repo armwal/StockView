@@ -6,6 +6,7 @@ using StockView.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,10 @@ namespace StockView.ViewModel
         private List<Stock> stocks;
 
         public ObservableCollection<StockViewModel> StockVms { get; set; }
+        public StockViewModel SelectedStock
+        {
+            get; set;
+        }
 
         public string TotalBuyPrice
         {
@@ -42,26 +47,51 @@ namespace StockView.ViewModel
             }
         }
 
+        public bool HasStocks
+        {
+            get
+            {
+                return StockVms.Count > 0;
+            }
+        }
+
         public ICommand CmdOpen { get; set; }
         public ICommand CmdAddNew { get; set; }
         public ICommand CmdBuy { get; set; }
         public ICommand CmdSell { get; set; }
+        public ICommand CmdSplit { get; set; }
 
         public MainWindowViewModel()
         {
             stocks = new List<Stock>();
             StockVms = new ObservableCollection<StockViewModel>();
+            StockVms.CollectionChanged += OnStockCollectionChanged;
             CmdOpen = new RelayCommand(CmdOpenExecute);
             CmdBuy = new RelayCommand(CmdBuyExecute);
             CmdSell = new RelayCommand(CmdSellExecute);
             CmdAddNew = new RelayCommand(CmdAddNewExecute);
+            CmdSplit = new RelayCommand(CmdSplitExecute);
 
             fileName = Properties.Settings.Default.SaveFilePath;
+            LoadFromFile(fileName);
+        }
+
+        private void OnStockCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            RaisePropertyChanged(nameof(HasStocks));
+        }
+
+        private void CmdSplitExecute()
+        {
+            StockSplitView splitDlg = new StockSplitView(stocks, SelectedStock?.Stock);
+            splitDlg.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+            splitDlg.ShowDialog();
         }
 
         private void CmdAddNewExecute()
         {
             StockAddView addDlg = new StockAddView(stocks);
+            addDlg.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             addDlg.ShowDialog();
 
             if (addDlg.NewStock != null)
@@ -88,13 +118,15 @@ namespace StockView.ViewModel
 
         private void CmdSellExecute()
         {
-            StockSellView sellDlg = new StockSellView(stocks);
+            StockSellView sellDlg = new StockSellView(stocks, SelectedStock?.Stock);
+            sellDlg.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             sellDlg.ShowDialog();
         }
 
         private void CmdBuyExecute()
         {
-            StockBuyView buyDlg = new StockBuyView(stocks);
+            StockBuyView buyDlg = new StockBuyView(stocks, SelectedStock?.Stock);
+            buyDlg.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             buyDlg.ShowDialog();
         }
 

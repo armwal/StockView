@@ -26,13 +26,8 @@ namespace StockView
             InitializeComponent();
         }
 
-        private void OnCloseClick(object sender, EventArgs e)
+        private void OnCloseClick(object sender, RoutedEventArgs e)
         {
-            if (DataContext is MainWindowViewModel vm)
-            {
-                vm.SaveToFile();
-            }
-
             Close();
         }
 
@@ -41,6 +36,17 @@ namespace StockView
             if (e.Column.Header.ToString() != "Aktueller Kurs")
             {
                 e.Column.IsReadOnly = true;
+            }
+        }
+
+        private void OnFormClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (MessageBox.Show("Änderungen abspeichern?", "Speichern?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                if (DataContext is MainWindowViewModel vm)
+                {
+                    vm.SaveToFile();
+                }
             }
         }
     }

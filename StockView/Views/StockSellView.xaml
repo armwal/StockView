@@ -26,7 +26,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Aktie</TextBlock>
-            <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding AvailableStocks}" SelectedItem="{Binding SelectedStock}" Margin="10" Height="30">
+            <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding AvailableStocks}" SelectedItem="{Binding SelectedStock}" Margin="10" Height="30" VerticalContentAlignment="Center">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock VerticalAlignment="Center" Text="{Binding Title}"></TextBlock>
