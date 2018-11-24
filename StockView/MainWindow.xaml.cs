@@ -1,4 +1,5 @@
-﻿using StockView.ViewModel;
+﻿using MahApps.Metro.Controls;
+using StockView.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;

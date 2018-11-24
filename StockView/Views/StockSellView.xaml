@@ -4,8 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StockView.ViewModel"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
             Title="Aktien Verkaufen" Height="250" Width="300">
     <Window.DataContext>
         <local:StockSellViewModel/>
@@ -13,30 +18,24 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="2*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Aktie</TextBlock>
-            <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding AvailableStocks}" SelectedItem="{Binding SelectedStock}" Margin="10" Height="30" VerticalContentAlignment="Center">
+            <ComboBox Grid.Row="0" ItemsSource="{Binding AvailableStocks}" SelectedItem="{Binding SelectedStock}" Margin="10" Height="30" VerticalContentAlignment="Center"
+                      materialDesign:HintAssist.Hint="Aktie">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock VerticalAlignment="Center" Text="{Binding Title}"></TextBlock>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Anzahl</TextBlock>
-            <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1" Height="30" Margin="10" Value="{Binding Shares}" Minimum="0" Increment="1"></xctk:IntegerUpDown>
-            <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Kurs</TextBlock>
-            <xctk:DecimalUpDown Grid.Row="2" Grid.Column="1" Height="30" Margin="10" Value="{Binding PricePerShare}" Minimum="0" Increment="0.01"></xctk:DecimalUpDown>
+            <mah:NumericUpDown Grid.Row="1" Value="{Binding Shares}" Minimum="0" Interval="1"  materialDesign:HintAssist.Hint="Anzahl"></mah:NumericUpDown>
+            <mah:NumericUpDown Grid.Row="2" Value="{Binding PricePerShare}" Minimum="0" Interval="0.01" materialDesign:HintAssist.Hint="Kurs [€]"></mah:NumericUpDown>
         </Grid>
         <UniformGrid Grid.Row="1" Columns="2">
             <Button Width="100" Margin="10" Click="OnSellClick" IsEnabled="{Binding CanBuy}">Kaufen</Button>

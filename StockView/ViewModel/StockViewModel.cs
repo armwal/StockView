@@ -13,6 +13,9 @@ namespace StockView.ViewModel
 {
     public class StockViewModel : ViewModelBase
     {
+        private static SolidColorBrush plusBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#DD000000"));
+        private static SolidColorBrush minusBrush = Brushes.Red;
+
         public Stock Stock { get; }
 
         public string Title
@@ -99,9 +102,9 @@ namespace StockView.ViewModel
             {
                 if (Stock.CurrentPricePerShare >= Stock.BuyPricePerShare)
                 {
-                    return Brushes.Black;
+                    return plusBrush;
                 }
-                return Brushes.Red;
+                return minusBrush;
             }
         }
 
@@ -119,9 +122,9 @@ namespace StockView.ViewModel
             {
                 if (Stock.RealizedRevenue >= 0)
                 {
-                    return Brushes.Black;
+                    return plusBrush;
                 }
-                return Brushes.Red;
+                return minusBrush;
             }
         }
 

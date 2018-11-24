@@ -5,7 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StockView.ViewModel"
         mc:Ignorable="d"
-        Title="Depotübersicht" Height="800" Width="1024" Closing="OnFormClosing">
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        Title="Depotübersicht" Height="800" Width="1200" Closing="OnFormClosing">
     <Window.DataContext>
         <local:MainWindowViewModel/>
     </Window.DataContext>
@@ -24,14 +28,14 @@
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
-        <GroupBox Grid.Row="0" Header="Depot">
+        <GroupBox Grid.Row="0" Header="Depot" Margin="3">
             <DataGrid ItemsSource="{Binding StockVms}" FrozenColumnCount="1" AutoGenerateColumns="False" SelectedItem="{Binding SelectedStock}" SelectionMode="Single" SelectionUnit="FullRow">
                 <DataGrid.ColumnHeaderStyle>
-                    <Style TargetType="DataGridColumnHeader">
+                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
                         <Setter Property="ContentTemplate">
                             <Setter.Value>
                                 <DataTemplate>
-                                    <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding}"></TextBlock>
+                                    <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding}" FontWeight="DemiBold" FontSize="14"></TextBlock>
                                 </DataTemplate>
                             </Setter.Value>
                         </Setter>
@@ -53,23 +57,23 @@
                 </DataGrid.Columns>
             </DataGrid>
         </GroupBox>
-        <GroupBox Grid.Row="1" Header="Gesamt">
+        <GroupBox Grid.Row="1" Header="Gesamt" Margin="3">
             <StackPanel Orientation="Horizontal">
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Einkaufspreis:</TextBlock>
                 <TextBlock Text="{Binding TotalBuyPrice}" FontWeight="Bold" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10"></TextBlock>
-                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Aktueller Wert:</TextBlock>
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,0,0,0">Aktueller Wert:</TextBlock>
                 <TextBlock Text="{Binding TotalSellPrice}" FontWeight="Bold" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10"></TextBlock>
             </StackPanel>
         </GroupBox>
         <StackPanel Grid.Row="2" Orientation="Horizontal">
-            <Button Width="150" Height="30" Command="{Binding CmdAddNew}">Neue Aktie</Button>
-            <Button Width="150" Height="30" Command="{Binding CmdBuy}" IsEnabled="{Binding HasStocks}">Aktie Kaufen</Button>
-            <Button Width="150" Height="30" Command="{Binding CmdSell}" IsEnabled="{Binding HasStocks}">Aktie Verkaufen</Button>
-            <Button Width="150" Height="30" Command="{Binding CmdSplit}" IsEnabled="{Binding HasStocks}">Aktiensplit</Button>
+            <Button Width="150" Height="30" Command="{Binding CmdAddNew}" Margin="5">Neue Aktie</Button>
+            <Button Width="150" Height="30" Command="{Binding CmdBuy}" Margin="5" IsEnabled="{Binding HasStocks}">Aktie Kaufen</Button>
+            <Button Width="150" Height="30" Command="{Binding CmdSell}" Margin="5" IsEnabled="{Binding HasStocks}">Aktie Verkaufen</Button>
+            <Button Width="150" Height="30" Command="{Binding CmdSplit}" Margin="5" IsEnabled="{Binding HasStocks}">Aktiensplit</Button>
         </StackPanel>
         <StackPanel Grid.Row="3" Orientation="Horizontal">
-            <Button Width="150" Height="30" Command="{Binding CmdOpen}">Öffnen</Button>
-            <Button Width="150" Height="30" Click="OnCloseClick">Schließen</Button>
+            <Button Width="150" Height="30" Margin="5" Command="{Binding CmdOpen}">Öffnen</Button>
+            <Button Width="150" Height="30" Margin="5" Click="OnCloseClick">Schließen</Button>
         </StackPanel>
         
     </Grid>
