@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using MaterialDesignThemes.Wpf;
 using StockView.ViewModel;
 using System;
 using System.Collections.Generic;
