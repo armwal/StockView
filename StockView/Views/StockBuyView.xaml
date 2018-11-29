@@ -11,7 +11,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
-        Title="Aktien Kaufen" Height="250" Width="300">
+        Title="Aktien Kaufen" SizeToContent="Height" Width="300">
     <Window.DataContext>
         <local:StockBuyViewModel/>
     </Window.DataContext>
@@ -22,6 +22,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -36,6 +37,7 @@
             </ComboBox>
             <mah:NumericUpDown Grid.Row="1" Value="{Binding Shares}" Minimum="0" Interval="1" materialDesign:HintAssist.Hint="Anzahl"></mah:NumericUpDown>
             <mah:NumericUpDown Grid.Row="2" Value="{Binding PricePerShare}" Minimum="0" Interval="0.01" materialDesign:HintAssist.Hint="Kurs [€]"></mah:NumericUpDown>
+            <DatePicker Grid.Row="3" Margin="10" SelectedDate="{Binding Date, StringFormat=dd.MM.yyyy}" materialDesign:HintAssist.Hint="Kaufdatum" materialDesign:HintAssist.IsFloating="True"></DatePicker>
         </Grid>
         <UniformGrid Grid.Row="1" Columns="2">
             <Button Width="100" Margin="10" Click="OnBuyClick" IsEnabled="{Binding CanBuy}">Kaufen</Button>

@@ -15,6 +15,7 @@ namespace StockView.ViewModel
         private string wkn;
         private int shares;
         private decimal pricePerShare;
+        private DateTime date;
 
         public string Title
         {
@@ -72,6 +73,16 @@ namespace StockView.ViewModel
             }
         }
 
+        public DateTime Date
+        {
+            get { return date; }
+            set
+            {
+                date = value;
+                RaisePropertyChanged(nameof(Date));
+            }
+        }
+
         public bool IsValid
         {
             get
@@ -83,6 +94,7 @@ namespace StockView.ViewModel
         public StockAddViewModel()
         {
             stocks = new List<Stock>();
+            date = DateTime.Now;
         }
 
         public void Initialize(List<Stock> availableStocks)
@@ -97,7 +109,7 @@ namespace StockView.ViewModel
                 Stock newStock = new Stock(Title, WKN);
                 if (Shares > 0)
                 {
-                    newStock.Buy(Shares, PricePerShare * Shares);
+                    newStock.Buy(Shares, PricePerShare * Shares, Date);
                 }
                 newStock.CurrentPricePerShare = PricePerShare;
 

@@ -11,7 +11,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
-        Title="Aktiensplit" Height="300" Width="300">
+        Title="Aktiensplit" SizeToContent="Height" Width="300">
     <Window.DataContext>
         <local:StockSplitViewModel/>
     </Window.DataContext>

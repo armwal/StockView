@@ -31,10 +31,10 @@ namespace StockView.Models
             }
         }
 
-        public static Transaction CreateBuyTransaction(int shares, decimal totalPrice)
+        public static Transaction CreateBuyTransaction(int shares, decimal totalPrice, DateTime date)
         {
             Transaction trans = new Transaction();
-            trans.Date = DateTime.Now;
+            trans.Date = date;
             trans.Type = enType.Buy;
             trans.Shares = shares;
             trans.TotalPrice = totalPrice;
@@ -42,10 +42,10 @@ namespace StockView.Models
             return trans;
         }
 
-        public static Transaction CreateSellTransaction(int shares, decimal totalPrice)
+        public static Transaction CreateSellTransaction(int shares, decimal totalPrice, DateTime date)
         {
             Transaction trans = new Transaction();
-            trans.Date = DateTime.Now;
+            trans.Date = date;
             trans.Type = enType.Sell;
             trans.Shares = shares;
             trans.TotalPrice = totalPrice;

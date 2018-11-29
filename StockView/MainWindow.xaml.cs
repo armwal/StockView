@@ -33,6 +33,15 @@ namespace StockView
             Close();
         }
 
+        private void OnSaveClick(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is MainWindowViewModel vm)
+            {
+                vm.SaveToFile();
+                MessageBox.Show("Änderungen gespeichert!", "Speichern", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
         private void OnAutoGeneratingColumns(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             if (e.Column.Header.ToString() != "Aktueller Kurs")
@@ -43,7 +52,7 @@ namespace StockView
 
         private void OnFormClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (MessageBox.Show("Änderungen abspeichern?", "Speichern?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Vor dem Schließen Änderungen abspeichern?", "Speichern?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 if (DataContext is MainWindowViewModel vm)
                 {

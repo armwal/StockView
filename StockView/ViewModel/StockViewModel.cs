@@ -140,6 +140,19 @@ namespace StockView.ViewModel
             }
         }
 
+        public DateTime BuyDate
+        {
+            get
+            {
+                return Stock.BuyDate;
+            }
+            set
+            {
+                Stock.BuyDate = value;
+                RaisePropertyChanged(nameof(BuyDate));
+            }
+        }
+
         public event EventHandler EvtUpdate;
 
         public StockViewModel(Stock stock)
@@ -159,6 +172,7 @@ namespace StockView.ViewModel
             RaisePropertyChanged(nameof(RevenueBrush));
             RaisePropertyChanged(nameof(RealizedRevenueBrush));
             RaisePropertyChanged(nameof(PossibleRevenuePercentage));
+            RaisePropertyChanged(nameof(BuyDate));
 
             EvtUpdate?.Invoke(this, EventArgs.Empty);
         }

@@ -30,6 +30,24 @@ namespace StockView.Models
         }
         public decimal RealizedRevenue { get; private set; }
         public List<Transaction> Transactions { get; }
+        public DateTime BuyDate
+        {
+            get
+            {
+                if (Transactions.Count > 0)
+                {
+                    return Transactions[0].Date;
+                }
+                return default(DateTime);
+            }
+            set
+            {
+                if (Transactions.Count > 0)
+                {
+                    Transactions[0].Date = value;
+                }
+            }
+        }
 
         public class UpdateEventArgs : EventArgs
         {
@@ -50,17 +68,17 @@ namespace StockView.Models
             Transactions = new List<Transaction>();
         }
 
-        public void Buy(int shares, decimal totalCost)
+        public void Buy(int shares, decimal totalCost, DateTime date)
         {
             BuyPricePerShare = (BuyPricePerShare * Shares + totalCost) / (Shares + shares);
             Shares += shares;
 
-            Transactions.Add(Transaction.CreateBuyTransaction(shares, totalCost));
+            Transactions.Add(Transaction.CreateBuyTransaction(shares, totalCost, date));
 
             EvtUpdate?.Invoke(this, new UpdateEventArgs(this));
         }
 
-        public void Sell(int shares, decimal totalPrice)
+        public void Sell(int shares, decimal totalPrice, DateTime date)
         {
             if (shares > Shares)
             {
@@ -71,7 +89,7 @@ namespace StockView.Models
 
             RealizedRevenue += totalPrice - (shares * BuyPricePerShare);
 
-            Transactions.Add(Transaction.CreateSellTransaction(shares, totalPrice)); 
+            Transactions.Add(Transaction.CreateSellTransaction(shares, totalPrice, date)); 
 
             EvtUpdate?.Invoke(this, new UpdateEventArgs(this));
         }

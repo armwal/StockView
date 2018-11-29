@@ -16,6 +16,7 @@ namespace StockView.ViewModel
         private int shares;
         private Stock selected;
         private decimal price;
+        private DateTime date;
 
         public ObservableCollection<Stock> AvailableStocks { get; }
         public Stock SelectedStock
@@ -48,6 +49,16 @@ namespace StockView.ViewModel
                 RaisePropertyChanged(nameof(CanBuy));
             }
         }
+        public DateTime Date
+        {
+            get { return date; }
+            set
+            {
+                date = value;
+                RaisePropertyChanged(nameof(Date));
+            }
+        }
+
         public bool CanBuy
         {
             get
@@ -61,13 +72,14 @@ namespace StockView.ViewModel
         {
             AvailableStocks = new ObservableCollection<Stock>();
             CmdBuy = new RelayCommand(CmdBuyExecute);
+            date = DateTime.Now;
         }
 
         private void CmdBuyExecute()
         {
             if (CanBuy)
             {
-                SelectedStock.Buy(Shares, Shares * PricePerShare);
+                SelectedStock.Buy(Shares, Shares * PricePerShare, Date);
             }
         }
 

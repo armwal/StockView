@@ -26,27 +26,35 @@ namespace StockViewTest
         [Fact]
         public void TestCreateBuy()
         {
-            Transaction trans = Transaction.CreateBuyTransaction(42, 123.45M);
+            DateTime testDate = new DateTime(2018, 3, 12);
+
+            Transaction trans = Transaction.CreateBuyTransaction(42, 123.45M, testDate);
 
             Assert.Equal(enType.Buy, trans.Type);
             Assert.Equal(42, trans.Shares);
             Assert.Equal(123.45M, trans.TotalPrice);
+            Assert.Equal(testDate, trans.Date);
         }
 
         [Fact]
         public void TestCreateSell()
         {
-            Transaction trans = Transaction.CreateSellTransaction(42, 123.45M);
+            DateTime testDate = new DateTime(2018, 3, 12);
+
+            Transaction trans = Transaction.CreateSellTransaction(42, 123.45M, testDate);
 
             Assert.Equal(enType.Sell, trans.Type);
             Assert.Equal(42, trans.Shares);
             Assert.Equal(123.45M, trans.TotalPrice);
+            Assert.Equal(testDate, trans.Date);
         }
 
         [Fact]
         public void TestWriteReadBuy()
         {
-            Transaction trans = Transaction.CreateBuyTransaction(42, 123.45M);
+            DateTime testDate = new DateTime(2018, 3, 12);
+
+            Transaction trans = Transaction.CreateBuyTransaction(42, 123.45M, testDate);
 
             XDocument doc = new XDocument();
             doc.Add(trans.Write());
@@ -68,7 +76,9 @@ namespace StockViewTest
         [Fact]
         public void TestWriteReadSell()
         {
-            Transaction trans = Transaction.CreateSellTransaction(42, 123.45M);
+            DateTime testDate = new DateTime(2018, 3, 12);
+
+            Transaction trans = Transaction.CreateSellTransaction(42, 123.45M, testDate);
 
             XDocument doc = new XDocument();
             doc.Add(trans.Write());

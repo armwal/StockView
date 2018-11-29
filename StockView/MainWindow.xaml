@@ -45,6 +45,18 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Titel" Binding="{Binding Title, Mode=OneWay}" Width="*"></DataGridTextColumn>
                     <DataGridTextColumn Header="WKN" Binding="{Binding WKN, Mode=OneWay}" Width="*"></DataGridTextColumn>
+                    <DataGridTemplateColumn  Header="Kaufdatum" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding BuyDate, StringFormat=dd.MM.yyyy}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding BuyDate}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Stück" Binding="{Binding Shares, Mode=OneWay}" Width="*" IsReadOnly="True"></DataGridTextColumn>
                     <DataGridTextColumn Header="Kaufpreis je Stück" Binding="{Binding BuyPricePerShare, Mode=OneWay}" Width="*" IsReadOnly="True"></DataGridTextColumn>
                     <DataGridTextColumn Header="Aktueller Kurs" Binding="{Binding CurrentPricePerShare}" Width="*"></DataGridTextColumn>
@@ -74,6 +86,7 @@
         </StackPanel>
         <StackPanel Grid.Row="3" Orientation="Horizontal">
             <Button Width="150" Height="30" Margin="5" Command="{Binding CmdOpen}">Öffnen</Button>
+            <Button Width="150" Height="30" Margin="5" Click="OnSaveClick">Speichern</Button>
             <Button Width="150" Height="30" Margin="5" Click="OnCloseClick">Schließen</Button>
         </StackPanel>
         

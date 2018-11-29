@@ -11,7 +11,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
-        Title="Aktie Hinzufügen" Height="350" Width="300">
+        Title="Aktie Hinzufügen" SizeToContent="Height" Width="300">
     <Window.DataContext>
         <local:StockAddViewModel/>
     </Window.DataContext>
@@ -26,11 +26,13 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBox Grid.Row="0" Text="{Binding Title}" materialDesign:HintAssist.Hint="Aktie"></TextBox>
             <TextBox Grid.Row="1" Text="{Binding WKN}" materialDesign:HintAssist.Hint="WKN"></TextBox>
             <mah:NumericUpDown Grid.Row="2" Value="{Binding Shares}" Minimum="0" Interval="1" materialDesign:HintAssist.Hint="Anzahl"></mah:NumericUpDown>
             <mah:NumericUpDown Grid.Row="3" Value="{Binding PricePerShare}" Minimum="0" Interval="0.01" materialDesign:HintAssist.Hint="Kurs"></mah:NumericUpDown>
+            <DatePicker Grid.Row="4" Margin="10" SelectedDate="{Binding Date, StringFormat=dd.MM.yyyy}" materialDesign:HintAssist.Hint="Kaufdatum" materialDesign:HintAssist.IsFloating="True"></DatePicker>
         </Grid>
         <UniformGrid Grid.Row="1" Columns="2">
             <Button Width="100" Margin="10" Click="OnAddClick" IsEnabled="{Binding IsValid}">Ok</Button>
